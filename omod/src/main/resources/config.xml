@@ -17,7 +17,7 @@
 
 	
 	<!-- Module Activator -->
-	<activator>${project.parent.groupId}.${project.parent.artifactId}.HIVCaseBasedSurveillanceActivator</activator>
+	<activator>${project.parent.groupId}.${project.parent.artifactId}.PharmacyinteroperabilityActivator</activator>
 	
 	
 	<!-- Maps hibernate file's, if present -->
@@ -41,20 +41,8 @@
 	</messages>
 	<!-- /Internationalization -->
 	<advice>
-	    <point>org.openmrs.api.PatientService</point>
-	    <class>org.openmrs.module.hivcasebasedsurveillance.advice.PatientAroundAdvisor</class>
-	</advice>
-	<advice>
 	    <point>org.openmrs.api.EncounterService</point>
-	    <class>org.openmrs.module.hivcasebasedsurveillance.advice.PatientEncounterAroundAdvisor</class>
-	</advice>
-	<advice>
-	    <point>org.openmrs.api.ObsService</point>
-	    <class>org.openmrs.module.hivcasebasedsurveillance.advice.PatientObsReturningAdvice</class>
-	</advice>
-	<advice>
-	    <point>org.openmrs.api.OrderService</point>
-	    <class>org.openmrs.module.hivcasebasedsurveillance.advice.PatientOrderReturningAdvice</class>
+	    <class>org.openmrs.module.pharmacyinteroperability.advice.PatientEncounterAroundAdvisor</class>
 	</advice>
 </module>
 

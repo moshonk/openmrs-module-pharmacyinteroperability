@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.openmrs.module.hivcasebasedsurveillance.constants;
+package org.openmrs.module.pharmacyinteroperability.constants;
 
 /**
  *
@@ -31,19 +31,22 @@ public enum Event {
     BIRTH("BIRTH"),
     TRANSFER_OUT("TRANSFER_OUT"),
     ART_ELIGIBILITY("ART_ELIGIBILITY"),
-    HEIGHT("HEIGHT"),
-    WEIGHT("WEIGHT"),
     ENROLLMENT_DATE("ENROLLMENT_DATE"),
     PATIENT_ADDRESS("ADDRESS"),
     PHONE_NUMBER("PHONE_NUMBER"),
     TYPE_OF_SERVICE("TYPE_OF_SERVICE"),
     CURRENT_STATUS("CURRENT_STATUS"),
-    PREGNANT("PREGNANT "),
     TB("TB "),
     CURRENT_REGIMEN("CURRENT_REGIMEN"),
     OTHER_DISEASE_CONDITIONS("OTHER_DISEASE_CONDITIONS"),
     ADR_SIDE_EFFECTS("ADR_SIDE_EFFECTS"),
-    OTHER_DRUGS("OTHER_DRUGS ");
+    OTHER_DRUGS("OTHER_DRUGS "),
+    PREGNANT("pregnant "),
+    HEIGHT("height"),
+    WEIGHT("weight"),
+    PHONE("phone");
+    
+    
     
 
     private final String event;

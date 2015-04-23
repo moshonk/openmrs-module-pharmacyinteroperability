@@ -1,4 +1,4 @@
-package org.openmrs.module.hivcasebasedsurveillance.mappers;
+package org.openmrs.module.pharmacyinteroperability.mappers;
 
 import java.util.HashSet;
 

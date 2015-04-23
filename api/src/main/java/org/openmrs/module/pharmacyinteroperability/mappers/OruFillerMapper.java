@@ -1,4 +1,4 @@
-package org.openmrs.module.hivcasebasedsurveillance.mappers;
+package org.openmrs.module.pharmacyinteroperability.mappers;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +11,7 @@ import org.openmrs.Obs;
 public class OruFillerMapper {
 	private Obs obs;
 	private OruFiller oruFiller;
-	private String event;
+	private String observationIdentifier;
 	public static final String CIEL_CONCEPT_DICTIONARY = "MVP/CIEL";
 	private SimpleDateFormat sdo = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH);
 
@@ -32,11 +32,11 @@ public class OruFillerMapper {
 	}
 
 	public String getEvent() {
-		return event;
+		return observationIdentifier;
 	}
 
-	public void setEvent(String event) {
-		this.event = event;
+	public void setObservationIdentifier(String event) {
+		this.observationIdentifier = event;
 	}
 
 	public OruFillerMapper() {
@@ -51,10 +51,10 @@ public class OruFillerMapper {
 	public OruFillerMapper(Obs obs, OruFiller oruFiller, String event) {
 		this.setObs(obs);
 		this.setOruFiller(oruFiller);
-		this.setEvent(event);
+		this.setObservationIdentifier(event);
 	}
 
-	public void mapObs(Object explicitValue) throws Exception {
+	public void mapValue(Object explicitValue) throws Exception {
 		oruFiller.setObservationIdentifierText(this.getEvent());
 		oruFiller.setDateTimeOfObservation(sdo.format(obs.getObsDatetime()));
 		/*

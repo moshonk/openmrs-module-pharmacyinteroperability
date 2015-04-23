@@ -1,4 +1,4 @@
-package org.openmrs.module.hivcasebasedsurveillance.mappers;
+package org.openmrs.module.pharmacyinteroperability.mappers;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -14,6 +14,8 @@ import org.openmrs.api.context.Context;
 
 public class PersonMapper {
 
+	private static final int MARITAL_STATUS_CONCEPT_ID = 1054;
+	private static final int TELEPHONE_NO_ATTRIBUTE_ID = 11;
 	private Patient omrsPatient;
 	private Person oecPerson;
 
@@ -49,8 +51,12 @@ public class PersonMapper {
 		oecPerson.setLastName(omrsPatient.getFamilyName());
 		oecPerson.setDob(omrsPatient.getBirthdate());
 		oecPerson.setSex(omrsPatient.getGender().equals("M") ? Sex.MALE : Sex.FEMALE);
+		
+		String telephoneNumber = null;
+		telephoneNumber = Context.getPersonService().getPersonAttribute(TELEPHONE_NO_ATTRIBUTE_ID).getValue();
+		oecPerson.setTelephoneNumber(telephoneNumber);
 
-		Concept maritalStatusConcept = Context.getConceptService().getConcept(1054);
+		Concept maritalStatusConcept = Context.getConceptService().getConcept(MARITAL_STATUS_CONCEPT_ID);
 		ArrayList<Obs> maritalStatusObs = (ArrayList<Obs>) Context.getObsService().getObservationsByPersonAndConcept(omrsPatient,
 				maritalStatusConcept);
 		if (maritalStatusObs == null) {

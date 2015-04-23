@@ -1,4 +1,4 @@
-package org.openmrs.module.hivcasebasedsurveillance.utils;
+package org.openmrs.module.pharmacyinteroperability.utils;
 
 import java.io.File;
 import java.util.Properties;
