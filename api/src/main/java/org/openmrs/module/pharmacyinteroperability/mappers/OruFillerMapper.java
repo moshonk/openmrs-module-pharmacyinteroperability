@@ -84,7 +84,7 @@ public class OruFillerMapper {
 			if (explicitValue instanceof Date) {
 				oruFiller.setObservationValue(sdo.format(explicitValue));
 			} else {
-				oruFiller.setObservationValue((String) explicitValue);
+				oruFiller.setObservationValue(String.valueOf(explicitValue));
 			}
 		}
 	}
