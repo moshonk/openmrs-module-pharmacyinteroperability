@@ -88,41 +88,33 @@ public class PatientEncounterAroundAdvisor extends StaticMethodMatcherPointcutAd
 			o = invocation.proceed();
 			
 			if (savedEncounter.getForm().getId() == CLINICIAN_FORM_ID) {
-				
 				AppProperties appProperties = new AppPropertiesLoader(new AppProperties()).getAppProperties();
-				Patient omrsPatient = null; //OpenMRS Patient object
-				org.openmrs.Person omrsPerson = null; //OpenMRS Person object
-				Person oecPerson = new Person(); //OEC Person object
-				HashSet<PersonIdentifier> patientIds = null;
-				PersonMapper personMapper = null;
-				List<Encounter> myEncounters = null;
-				List<Obs> myObs = null;
-				List<OruFiller> fillers = null;
-				omrsPatient = savedEncounter.getPatient();
-				omrsPerson = Context.getPersonService().getPerson(omrsPatient.getPatientId());
-				patientIds = new PatientIdsMapper(omrsPatient).getPatientIds();
-				personMapper = new PersonMapper(omrsPatient, oecPerson);
-				personMapper.mapPatient(patientIds);
-				List<Encounter> patientEncounters = Context.getEncounterService().getEncountersByPatient(omrsPatient);
-				int clinicianEncounters = 0;
-				for (Encounter encounter : patientEncounters) {
-					if (encounter.getForm().getId() == CLINICIAN_FORM_ID) {
-						clinicianEncounters++;
-					}
-				}
-				if (clinicianEncounters == 1) {
-					myEncounters = Context.getEncounterService().getEncounters(omrsPatient, null, startDate, lastDate, null,
-					    null, null, null, null, false);
-					myObs = Context.getObsService().getObservations(Collections.singletonList(omrsPerson), myEncounters,
-					    null, null, null, null, null, null, null, null, null, false);
-					fillers = new ArrayList<OruFiller>();
-					Date dateEnrolled = new Date();
-					OruFiller dateEnrolledOruFiller = new OruFiller();
-					dateEnrolledOruFiller.setCodingSystem((String) appProperties.getProperty("coding_system"));
-					dateEnrolledOruFiller.setObservationIdentifier("date_enrolled");
-					dateEnrolledOruFiller.setObservationValue(sdf.format(dateEnrolled));
-					fillers.add(dateEnrolledOruFiller);
-					try {
+				if (appProperties != null) {
+	                Patient omrsPatient = null; //OpenMRS Patient object
+	                org.openmrs.Person omrsPerson = null; //OpenMRS Person object
+	                Person oecPerson = new Person(); //OEC Person object
+	                HashSet<PersonIdentifier> patientIds = null;
+	                PersonMapper personMapper = null;
+	                List<Encounter> myEncounters = null;
+	                List<Obs> myObs = null;
+	                List<OruFiller> fillers = null;
+	                omrsPatient = savedEncounter.getPatient();
+	                omrsPerson = Context.getPersonService().getPerson(omrsPatient.getPatientId());
+	                patientIds = new PatientIdsMapper(omrsPatient).getPatientIds();
+	                personMapper = new PersonMapper(omrsPatient, oecPerson);
+	                personMapper.mapPatient(patientIds);
+	                myEncounters = Context.getEncounterService().getEncounters(omrsPatient, null, startDate, lastDate, null,
+	                    null, null, null, null, false);
+	                myObs = Context.getObsService().getObservations(Collections.singletonList(omrsPerson), myEncounters,
+	                    null, null, null, null, null, null, null, null, null, false);
+	                fillers = new ArrayList<OruFiller>();
+	                Date dateEnrolled = new Date();
+	                OruFiller dateEnrolledOruFiller = new OruFiller();
+	                dateEnrolledOruFiller.setCodingSystem((String) appProperties.getProperty("coding_system"));
+	                dateEnrolledOruFiller.setObservationIdentifier("date_enrolled");
+	                dateEnrolledOruFiller.setObservationValue(sdf.format(dateEnrolled));
+	                fillers.add(dateEnrolledOruFiller);
+	                try {
 						processObs(appProperties, myObs, fillers);
 					}
 					catch (Exception e) {
