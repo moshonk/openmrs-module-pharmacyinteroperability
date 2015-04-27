@@ -3,6 +3,7 @@ package org.openmrs.module.pharmacyinteroperability.advice;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,8 +22,12 @@ import org.kemricdc.entities.PersonIdentifier;
 import org.kemricdc.hapi.EventsHl7Service;
 import org.kemricdc.hapi.util.OruFiller;
 import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
+import org.openmrs.Provider;
+import org.openmrs.Visit;
+import org.openmrs.VisitType;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.pharmacyinteroperability.mappers.OruFillerMapper;
 import org.openmrs.module.pharmacyinteroperability.mappers.PatientIdsMapper;
@@ -103,14 +108,10 @@ public class PatientEncounterAroundAdvisor extends StaticMethodMatcherPointcutAd
 	                patientIds = new PatientIdsMapper(omrsPatient).getPatientIds();
 	                personMapper = new PersonMapper(omrsPatient, oecPerson);
 	                personMapper.mapPatient(patientIds);
-	                List<Encounter> patientEncounters = Context.getEncounterService().getEncountersByPatient(omrsPatient);
-					int clinicianEncounters = 0;
-					for (Encounter encounter : patientEncounters) {
-						if (encounter.getForm().getId() == CLINICIAN_FORM_ID) {
-							clinicianEncounters++;
-						}
-					}
-					if (clinicianEncounters == 1) {
+					List<Encounter> clinicianEncounters = Context.getEncounterService().getEncounters(omrsPatient, null,
+					    null, lastDate, Collections.singleton(Context.getFormService().getForm(CLINICIAN_FORM_ID)), null,
+					    null, null, null, false);
+					if (clinicianEncounters.size() == 1) {
 						myEncounters = Context.getEncounterService().getEncounters(omrsPatient, null, startDate, lastDate,
 						    null, null, null, null, null, false);
 						myObs = Context.getObsService().getObservations(Collections.singletonList(omrsPerson), myEncounters,
