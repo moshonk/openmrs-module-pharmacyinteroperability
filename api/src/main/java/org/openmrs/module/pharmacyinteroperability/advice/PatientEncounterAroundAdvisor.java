@@ -232,19 +232,6 @@ public class PatientEncounterAroundAdvisor extends StaticMethodMatcherPointcutAd
 					fillers.add(oruFillerMapper.getOruFiller());
 					oruFillerMapper.mapValue(null);
 					break;
-				/*
-				 *case 5089: //Weight
-					oruFillerMapper.setObservationIdentifier("start_weight");
-					fillers.add(oruFillerMapper.getOruFiller());
-					oruFillerMapper.mapValue(null);
-					break;
-				case 6853: //FP Method
-					oruFillerMapper.setObservationIdentifier("fplan");
-					fillers.add(oruFillerMapper.getOruFiller());
-					oruFillerMapper.mapValue(null);
-					break;
-					
-					*/
 			}
 		}
 	}
