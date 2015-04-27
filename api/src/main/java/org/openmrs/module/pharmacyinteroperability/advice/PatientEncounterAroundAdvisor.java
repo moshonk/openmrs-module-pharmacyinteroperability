@@ -79,7 +79,7 @@ public class PatientEncounterAroundAdvisor extends StaticMethodMatcherPointcutAd
 		public Object invoke(MethodInvocation invocation) throws Throwable {
 			Object args[] = invocation.getArguments();
 			Encounter savedEncounter = (Encounter) args[0];
-			Date startDate = new Date();
+			Date startDate = OpenmrsUtil.firstSecondOfDay(new Date());
 			Date lastDate = OpenmrsUtil.getLastMomentOfDay(startDate);
 			
 			Boolean newEncounter = savedEncounter.getId() == null ? true : false;
