@@ -10,6 +10,7 @@ import org.kemricdc.entities.Sex;
 import org.openmrs.Concept;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
+import org.openmrs.PersonAttribute;
 import org.openmrs.api.context.Context;
 
 public class PersonMapper {
@@ -52,8 +53,11 @@ public class PersonMapper {
 		oecPerson.setDob(omrsPatient.getBirthdate());
 		oecPerson.setSex(omrsPatient.getGender().equals("M") ? Sex.MALE : Sex.FEMALE);
 		
-		String telephoneNumber = null;
-		telephoneNumber = Context.getPersonService().getPersonAttribute(TELEPHONE_NO_ATTRIBUTE_ID).getValue();
+		String telephoneNumber = null;		
+		PersonAttribute telephoneNumberAttribute = omrsPatient.getAttribute(TELEPHONE_NO_ATTRIBUTE_ID);
+		if (telephoneNumberAttribute != null) {
+			telephoneNumber = telephoneNumberAttribute.getValue();
+		}
 		oecPerson.setTelephoneNumber(telephoneNumber);
 
 		Concept maritalStatusConcept = Context.getConceptService().getConcept(MARITAL_STATUS_CONCEPT_ID);
