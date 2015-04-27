@@ -181,12 +181,12 @@ public class PatientEncounterAroundAdvisor extends StaticMethodMatcherPointcutAd
 					fillers.add(oruFillerMapper.getOruFiller());
 					oruFillerMapper.mapValue(null);
 					break;
-				case 6561:// Service
+				case 6561:// Regimen at start
 					oruFillerMapper.setObservationIdentifier("start_regimen");
 					fillers.add(oruFillerMapper.getOruFiller());
 					oruFillerMapper.mapValue(null);
 					break;
-				case 6154:// Service
+				case 6154:// Regimen Start Date
 					oruFillerMapper.setObservationIdentifier("start_regimen_date");
 					fillers.add(oruFillerMapper.getOruFiller());
 					oruFillerMapper.mapValue(null);
@@ -201,7 +201,7 @@ public class PatientEncounterAroundAdvisor extends StaticMethodMatcherPointcutAd
 					fillers.add(oruFillerMapper.getOruFiller());
 					oruFillerMapper.mapValue(null);
 					break;
-				case 5089: //FP
+				case 5089: //Weight
 					oruFillerMapper.setObservationIdentifier("start_weight");
 					fillers.add(oruFillerMapper.getOruFiller());
 					oruFillerMapper.mapValue(null);
@@ -227,6 +227,24 @@ public class PatientEncounterAroundAdvisor extends StaticMethodMatcherPointcutAd
 					}
 					oruFillerMapper.mapValue(whoStage.toString());
 					break;
+				 case 5096: //TCA Date				 
+					oruFillerMapper.setObservationIdentifier("nextappointment");
+					fillers.add(oruFillerMapper.getOruFiller());
+					oruFillerMapper.mapValue(null);
+					break;
+				/*
+				 *case 5089: //Weight
+					oruFillerMapper.setObservationIdentifier("start_weight");
+					fillers.add(oruFillerMapper.getOruFiller());
+					oruFillerMapper.mapValue(null);
+					break;
+				case 6853: //FP Method
+					oruFillerMapper.setObservationIdentifier("fplan");
+					fillers.add(oruFillerMapper.getOruFiller());
+					oruFillerMapper.mapValue(null);
+					break;
+					
+					*/
 			}
 		}
 	}
