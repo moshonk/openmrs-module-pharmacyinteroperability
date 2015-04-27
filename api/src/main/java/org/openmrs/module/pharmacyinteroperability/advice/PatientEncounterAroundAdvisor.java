@@ -103,36 +103,45 @@ public class PatientEncounterAroundAdvisor extends StaticMethodMatcherPointcutAd
 	                patientIds = new PatientIdsMapper(omrsPatient).getPatientIds();
 	                personMapper = new PersonMapper(omrsPatient, oecPerson);
 	                personMapper.mapPatient(patientIds);
-	                myEncounters = Context.getEncounterService().getEncounters(omrsPatient, null, startDate, lastDate, null,
-	                    null, null, null, null, false);
-	                myObs = Context.getObsService().getObservations(Collections.singletonList(omrsPerson), myEncounters,
-	                    null, null, null, null, null, null, null, null, null, false);
-	                fillers = new ArrayList<OruFiller>();
-	                Date dateEnrolled = new Date();
-	                OruFiller dateEnrolledOruFiller = new OruFiller();
-	                dateEnrolledOruFiller.setCodingSystem((String) appProperties.getProperty("coding_system"));
-	                dateEnrolledOruFiller.setObservationIdentifier("date_enrolled");
-	                dateEnrolledOruFiller.setObservationValue(sdf.format(dateEnrolled));
-	                fillers.add(dateEnrolledOruFiller);
-	                try {
-						processObs(appProperties, myObs, fillers);
-					}
-					catch (Exception e) {
-						log.debug(e.getMessage());
-					}
-					try {
-						EventsHl7Service eventsHl7Service = new EventsHl7Service(personMapper.getOecPerson(), fillers,
-						        appProperties);
-						
-						if (newEncounter) {
-							eventsHl7Service.doWork(Triggers.R01.getValue());
-						} else {
-							eventsHl7Service.doWork(Triggers.R01.getValue());
+	                List<Encounter> patientEncounters = Context.getEncounterService().getEncountersByPatient(omrsPatient);
+					int clinicianEncounters = 0;
+					for (Encounter encounter : patientEncounters) {
+						if (encounter.getForm().getId() == CLINICIAN_FORM_ID) {
+							clinicianEncounters++;
 						}
 					}
-					catch (Exception ex) {
-						log.debug(ex);
-						System.out.println("Unable to send HL7 message: " + ex.getMessage());
+					if (clinicianEncounters == 1) {
+						myEncounters = Context.getEncounterService().getEncounters(omrsPatient, null, startDate, lastDate,
+						    null, null, null, null, null, false);
+						myObs = Context.getObsService().getObservations(Collections.singletonList(omrsPerson), myEncounters,
+						    null, null, null, null, null, null, null, null, null, false);
+						fillers = new ArrayList<OruFiller>();
+						Date dateEnrolled = new Date();
+						OruFiller dateEnrolledOruFiller = new OruFiller();
+						dateEnrolledOruFiller.setCodingSystem((String) appProperties.getProperty("coding_system"));
+						dateEnrolledOruFiller.setObservationIdentifier("date_enrolled");
+						dateEnrolledOruFiller.setObservationValue(sdf.format(dateEnrolled));
+						fillers.add(dateEnrolledOruFiller);
+						try {
+							processObs(appProperties, myObs, fillers);
+						}
+						catch (Exception e) {
+							log.debug(e.getMessage());
+						}
+						try {
+							EventsHl7Service eventsHl7Service = new EventsHl7Service(personMapper.getOecPerson(), fillers,
+							        appProperties);
+							
+							if (newEncounter) {
+								eventsHl7Service.doWork(Triggers.R01.getValue());
+							} else {
+								eventsHl7Service.doWork(Triggers.R01.getValue());
+							}
+						}
+						catch (Exception ex) {
+							log.debug(ex);
+							System.out.println("Unable to send HL7 message: " + ex.getMessage());
+						}
 					}
 				}
 			}
