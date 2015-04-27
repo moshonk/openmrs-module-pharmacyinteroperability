@@ -108,10 +108,14 @@ public class PatientEncounterAroundAdvisor extends StaticMethodMatcherPointcutAd
 	                patientIds = new PatientIdsMapper(omrsPatient).getPatientIds();
 	                personMapper = new PersonMapper(omrsPatient, oecPerson);
 	                personMapper.mapPatient(patientIds);
-					List<Encounter> clinicianEncounters = Context.getEncounterService().getEncounters(omrsPatient, null,
+					List<Encounter> patientClinicianEncounters = Context.getEncounterService().getEncounters(omrsPatient, null,
 					    null, lastDate, Collections.singleton(Context.getFormService().getForm(CLINICIAN_FORM_ID)), null,
 					    null, null, null, false);
-					if (clinicianEncounters.size() == 1) {
+					int clinicianEncounters = 0;
+					if (patientClinicianEncounters != null) {
+						clinicianEncounters = patientClinicianEncounters.size();
+					}
+					if (clinicianEncounters == 1) {
 						myEncounters = Context.getEncounterService().getEncounters(omrsPatient, null, startDate, lastDate,
 						    null, null, null, null, null, false);
 						myObs = Context.getObsService().getObservations(Collections.singletonList(omrsPerson), myEncounters,
