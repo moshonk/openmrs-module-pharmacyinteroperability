@@ -53,7 +53,7 @@ public class PersonMapper {
 		oecPerson.setDob(omrsPatient.getBirthdate());
 		oecPerson.setSex(omrsPatient.getGender().equals("M") ? Sex.MALE : Sex.FEMALE);
 		
-		String telephoneNumber = null;		
+		String telephoneNumber = "";		
 		PersonAttribute telephoneNumberAttribute = omrsPatient.getAttribute(TELEPHONE_NO_ATTRIBUTE_ID);
 		if (telephoneNumberAttribute != null) {
 			telephoneNumber = telephoneNumberAttribute.getValue();
