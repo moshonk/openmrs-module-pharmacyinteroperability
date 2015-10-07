@@ -7,7 +7,7 @@ import org.kemricdc.entities.AppProperties;
 import org.openmrs.api.context.Context;
 
 public class AppPropertiesLoader {
-	private static final String PROPERTIES_FILE_LOCATION_GLOBAL_PROPERTY = "hcbsurveillance.propertiesFileLocation";
+	private static final String PROPERTIES_FILE_LOCATION_GLOBAL_PROPERTY = "pharmacy.propertiesFileLocation";
 	private AppProperties appProperties;
 	
 	public AppPropertiesLoader(AppProperties appProperties){
