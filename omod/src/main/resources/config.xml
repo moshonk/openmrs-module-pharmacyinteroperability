@@ -44,5 +44,13 @@
 	    <point>org.openmrs.api.EncounterService</point>
 	    <class>org.openmrs.module.pharmacyinteroperability.advice.PatientEncounterAroundAdvisor</class>
 	</advice>
+	
+	<globalProperty>
+		<property>pharmacy.propertiesFileLocation</property>
+		<defaultValue>/usr/share/tomcat6/.OpenMRS/pharmacy.app.properties</defaultValue>
+		<description>
+			Location of the app.properties file used by the Pharmacy Interoperability module 
+		</description>
+	</globalProperty>
 </module>
 
